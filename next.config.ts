@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   experimental: {
     agentFeedback: true,
   },
+    devIndicators: {
+    position: "bottom-right", // move the dev "N" badge away from the sidebar
+  },
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {

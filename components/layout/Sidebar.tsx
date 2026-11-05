@@ -21,7 +21,6 @@ export default function Sidebar() {
         <NavLinks />
       </div>
       {/* Bottom: avatar + account menu (profile, sign out) and the theme toggle */}
-      // bottom of the sidebar:
       <div className="flex items-center justify-between gap-2 border-t border-sidebar-border pt-4">
         <UserMenu />
         <ThemeToggle />

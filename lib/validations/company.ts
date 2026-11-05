@@ -19,8 +19,9 @@ export const companySchema = z.object({
     .trim()
     .min(2, "Numele trebuie să aibă cel puțin 2 caractere")
     .max(120, "Numele este prea lung"),
-  // CUI: remove spaces, uppercase, drop the "RO" prefix → "ro 123 45" becomes "12345".
-  // Then check it's digits only (Romanian CUI: 2–10 digits).
+  // 1. clean: remove spaces, uppercase, strip "RO"
+  // 2. check: only 2–10 digits (or empty)
+  // 3. empty → null
   cui: z
     .string()
     .transform((value) =>

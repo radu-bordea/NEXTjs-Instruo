@@ -15,6 +15,7 @@ import {
 import NavLinks from "@/components/layout/NavLinks";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 import { UserButton } from "@clerk/nextjs";
+import { OrganizationSwitcher } from "@clerk/nextjs";
 
 export default function MobileNav() {
   // We control open/closed ourselves, so a link click can close the drawer
@@ -45,6 +46,15 @@ export default function MobileNav() {
           <SheetHeader className="p-0 pb-4">
             <SheetTitle className="text-left text-primary">Instruo</SheetTitle>
           </SheetHeader>
+          {/* Shows the active consultancy. Lets the user switch, create one,
+    or manage members. hidePersonal: personal accounts aren't allowed. */}
+          <div className="mb-4">
+            <OrganizationSwitcher
+              hidePersonal
+              afterSelectOrganizationUrl="/dashboard"
+              afterCreateOrganizationUrl="/dashboard"
+            />
+          </div>
           <NavLinks onNavigate={() => setOpen(false)} />
         </SheetContent>
       </Sheet>

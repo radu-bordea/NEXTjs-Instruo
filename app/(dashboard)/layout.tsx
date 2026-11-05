@@ -4,7 +4,7 @@
 
 import Sidebar from "@/components/layout/Sidebar";
 import MobileNav from "@/components/layout/MobileNav";
-import { requireUser } from "@/lib/auth";
+import { requireOrg } from "@/lib/auth";
 
 // Tells Next.js: this route is dynamic on purpose (it reads the login cookie).
 // Without it, Cache Components tries to prerender it and shows the "Blocking Route" error.
@@ -12,7 +12,7 @@ export const instant = false;
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   // Logged out → redirect to /sign-in before anything renders
-  await requireUser();
+  await requireOrg();
 
   return (
     <div className="flex min-h-screen flex-col bg-background md:flex-row">

@@ -6,6 +6,7 @@ import NavLinks from "@/components/layout/NavLinks";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 // at the top, with the other imports
 import { UserButton } from "@clerk/nextjs";
+import UserMenu from "@/components/layout/UserMenu";
 
 export default function Sidebar() {
   return (
@@ -19,10 +20,10 @@ export default function Sidebar() {
         </Link>
         <NavLinks />
       </div>
-
       {/* Bottom: avatar + account menu (profile, sign out) and the theme toggle */}
-      <div className="flex items-center justify-between border-t border-sidebar-border pt-4">
-        <UserButton />
+      // bottom of the sidebar:
+      <div className="flex items-center justify-between gap-2 border-t border-sidebar-border pt-4">
+        <UserMenu />
         <ThemeToggle />
       </div>
     </aside>

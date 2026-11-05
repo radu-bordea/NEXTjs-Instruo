@@ -1,0 +1,92 @@
+// prisma/schema.prisma
+// Instruo – data model
+// Hierarchy: Consultancy (Clerk org) → ClientCompany → Employee → FormEntry
+// Users and organizations live in Clerk; we only store their IDs (orgId, createdBy).
+generator client {
+  provider = "prisma-client" // Prisma 7's new generator
+  output   = "../lib/generated/prisma" // generated code (not committed to Git)
+}
+
+datasource db {
+  provider = "postgresql"
+  // Prisma 7: no url here. CLI uses prisma.config.ts, the app uses the Neon adapter.
+}
+
+// A company the consultant manages (the bakery, the shop...).
+// EVERY query must filter by orgId so consultancies never see each other's data.
+model ClientCompany {
+  id        String     @id @default(cuid())
+  orgId     String                       // Clerk organization id (the tenant)
+  name      String                       // e.g. "Brutăria Ana SRL"
+  cui       String?                      // Romanian company tax id
+  address   String?
+  employees Employee[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([orgId])
+}
+
+// A worker at a client company. No CNP for now (sensitive data, GDPR).
+model Employee {
+  id              String        @id @default(cuid())
+  orgId           String                        // duplicated on purpose: simpler, safer queries
+  companyId       String
+  company         ClientCompany @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  firstName       String
+  lastName        String
+  jobTitle        String                        // e.g. "Vânzător", "Brutar"
+  hireDate        DateTime
+  endDate         DateTime?                     // employment ended; sheet kept until then
+  medicalFitUntil DateTime?                     // expiry of latest medical fitness sheet
+  entries         FormEntry[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([orgId])
+  @@index([companyId])
+}
+
+// The DESCRIPTION of a form (which fields it has).
+// orgId = null → our built-in standard template. orgId set → a consultancy's own copy (later).
+model FormTemplate {
+  id        String      @id @default(cuid())
+  orgId     String?
+  slug      String                       // e.g. "ssm-training"
+  name      String                       // "Fișă de instruire individuală SSM"
+  version   Int         @default(1)
+  fields    Json                         // list of fields
+  entries   FormEntry[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([orgId])
+}
+
+// One FILLED-IN form, e.g. "Maria's periodic training on 4 Nov 2026".
+// Columns = what app logic needs. data (Json) = answers to the template's fields.
+model FormEntry {
+  id              String       @id @default(cuid())
+  orgId           String
+  employeeId      String
+  employee        Employee     @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  templateId      String
+  template        FormTemplate @relation(fields: [templateId], references: [id])
+  templateVersion Int
+  date            DateTime                  // when the training happened
+  nextDueDate     DateTime?                 // drives the "expired / due soon" dashboard
+  status          EntryStatus  @default(DRAFT)
+  data            Json
+  createdBy       String                    // Clerk user id
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([orgId])
+  @@index([employeeId])
+  @@index([orgId, nextDueDate])
+}
+
+enum EntryStatus {
+  DRAFT
+  COMPLETED
+}

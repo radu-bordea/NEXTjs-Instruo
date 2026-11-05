@@ -40,14 +40,21 @@ export default async function CompaniesPage() {
           </p>
         </div>
       ) : (
-        // List: bordered rows, one per company
-        <ul className="divide-y divide-border rounded-lg border border-border bg-card shadow-sm">
+        // overflow-hidden: row backgrounds stay inside the rounded corners */
+        <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card shadow-sm">
           {companies.map((company) => (
-            <li key={company.id} className="flex items-center justify-between gap-4 p-4">
+            <li
+              key={company.id}
+              // even:bg-muted/40 → every 2nd row lightly shaded (zebra)
+              // hover:bg-accent  → light teal on the row under the mouse
+              // transition-colors → smooth color change
+              className="flex items-center justify-between gap-4 p-4 transition-colors even:bg-muted/40 hover:bg-accent"
+            >
               <div className="min-w-0">
                 <p className="truncate font-medium">{company.name}</p>
                 <p className="truncate text-sm text-muted-foreground">
-                  {[company.cui, company.address].filter(Boolean).join(" · ") || "Fără detalii"}
+                  {[company.cui, company.address].filter(Boolean).join(" · ") ||
+                    "Fără detalii"}
                 </p>
               </div>
               <span className="shrink-0 text-xs text-muted-foreground">

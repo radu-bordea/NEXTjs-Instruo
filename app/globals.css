@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "@clerk/ui/themes/shadcn.css"; /* makes Clerk's sign-in boxes use our theme colors */
 
 /* Enables dark: classes when <html class="dark"> (next-themes sets that class) */
 @custom-variant dark (&:is(.dark *));

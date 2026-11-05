@@ -6,9 +6,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import NavLinks from "@/components/layout/NavLinks";
 import ThemeToggle from "@/components/theme/ThemeToggle";
+import { UserButton } from "@clerk/nextjs";
 
 export default function MobileNav() {
   // We control open/closed ourselves, so a link click can close the drawer
@@ -21,6 +27,7 @@ export default function MobileNav() {
       </Link>
 
       <div className="flex items-center gap-1">
+        <UserButton />
         <ThemeToggle />
         <button
           type="button"

@@ -17,7 +17,7 @@ export default function HomePage() {
           într-un singur loc.
         </p>
         <Link
-          href="/dashboard"
+          href="/sign-up"
           className="mt-8 inline-block rounded-md bg-primary px-6 py-3 font-medium text-primary-foreground hover:bg-primary/90"
         >
           Începe gratuit

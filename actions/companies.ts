@@ -12,40 +12,45 @@ import { companySchema } from "@/lib/validations/company";
 
 // What the action sends back to the form when something is wrong
 export type CompanyFormState = {
-  errors?: Partial<Record<"name" | "cui" | "address", string[]>>; // per-field errors
-  message?: string; // general error
+  errors?: Partial<Record<"name" | "cui" | "address", string[]>>;
+  message?: string;
+  // What the user typed, so the form can show it again after React resets it
+  values?: { name: string; cui: string; address: string };
 };
 
 export async function createCompany(
-  _prevState: CompanyFormState, // previous state (required by useActionState, unused here)
-  formData: FormData, // everything the user typed, by input "name"
+  _prevState: CompanyFormState,
+  formData: FormData
 ): Promise<CompanyFormState> {
-  // 1. Who is this? orgId comes from Clerk, NEVER from the form.
   const { orgId } = await requireOrg();
 
-  // 2. Validate. safeParse doesn't throw; it returns success or error.
-  const parsed = companySchema.safeParse({
-    name: formData.get("name"),
-    cui: formData.get("cui") ?? "",
-    address: formData.get("address") ?? "",
-  });
+  // Read the raw input once. We validate it AND send it back on errors.
+  const values = {
+    name: String(formData.get("name") ?? ""),
+    cui: String(formData.get("cui") ?? ""),
+    address: String(formData.get("address") ?? ""),
+  };
+
+  const parsed = companySchema.safeParse(values);
 
   if (!parsed.success) {
-    // Turn Zod's error into { name: ["..."], cui: ["..."] } for the form
-    return { errors: z.flattenError(parsed.error).fieldErrors };
+    return { errors: z.flattenError(parsed.error).fieldErrors, values };
   }
 
-  // 3. Save. The schema already turned empty fields into null.
   try {
     await db.clientCompany.create({
-      data: { orgId, ...parsed.data }, // name, cui, address – already clean
+      data: { orgId, ...parsed.data },
     });
-  } catch {
-    return { message: "Nu am putut salva firma. Încearcă din nou." };
+  } catch (error) {
+    if (
+      typeof error === "object" && error !== null &&
+      "code" in error && error.code === "P2002"
+    ) {
+      return { errors: { cui: ["Există deja o firmă cu acest CUI."] }, values };
+    }
+    return { message: "Nu am putut salva firma. Încearcă din nou.", values };
   }
 
-  // 4. Tell Next.js the list changed, then go back to it.
-  // redirect() must be OUTSIDE try/catch: it works by throwing a special signal.
   revalidatePath("/companies");
   redirect("/companies");
 }

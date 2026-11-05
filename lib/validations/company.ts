@@ -7,7 +7,11 @@ import { z } from "zod";
 // trims spaces, checks max length, and turns an empty input ("") into null.
 // Export it so other schemas (employees, entries) can reuse it.
 export const optionalText = (max: number, message: string) =>
-  z.string().trim().max(max, message).transform((value) => value || null);
+  z
+    .string()
+    .trim()
+    .max(max, message)
+    .transform((value) => value || null);
 
 export const companySchema = z.object({
   name: z
@@ -15,7 +19,18 @@ export const companySchema = z.object({
     .trim()
     .min(2, "Numele trebuie să aibă cel puțin 2 caractere")
     .max(120, "Numele este prea lung"),
-  cui: optionalText(20, "CUI-ul este prea lung"),
+  // CUI: remove spaces, uppercase, drop the "RO" prefix → "ro 123 45" becomes "12345".
+  // Then check it's digits only (Romanian CUI: 2–10 digits).
+  cui: z
+    .string()
+    .transform((value) =>
+      value.replace(/\s/g, "").toUpperCase().replace(/^RO/, ""),
+    )
+    .refine(
+      (value) => value === "" || /^\d{2,10}$/.test(value),
+      "CUI-ul trebuie să conțină doar cifre (2–10)",
+    )
+    .transform((value) => value || null),
   address: optionalText(200, "Adresa este prea lungă"),
 });
 

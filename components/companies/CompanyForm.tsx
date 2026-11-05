@@ -34,6 +34,7 @@ export default function CompanyForm() {
           id="name"
           name="name"
           placeholder="Brutăria Ana SRL"
+          defaultValue={state.values?.name}
           aria-invalid={!!state.errors?.name}
         />
         {state.errors?.name && (
@@ -47,6 +48,7 @@ export default function CompanyForm() {
           id="cui"
           name="cui"
           placeholder="RO12345678"
+          defaultValue={state.values?.cui}
           aria-invalid={!!state.errors?.cui}
         />
         {state.errors?.cui && (
@@ -60,6 +62,7 @@ export default function CompanyForm() {
           id="address"
           name="address"
           placeholder="Str. Exemplu 10, Cluj-Napoca"
+          defaultValue={state.values?.address}
           aria-invalid={!!state.errors?.address}
         />
         {state.errors?.address && (

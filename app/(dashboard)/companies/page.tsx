@@ -7,6 +7,9 @@ import { db } from "@/lib/db";
 import { requireOrg } from "@/lib/auth";
 import { buttonVariants } from "@/components/ui/button";
 
+// Dynamic on purpose: shows this organization's live data.
+export const instant = false;
+
 export default async function CompaniesPage() {
   // Every data page checks the org itself (layouts don't always re-run)
   const { orgId } = await requireOrg();

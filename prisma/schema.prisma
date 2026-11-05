@@ -25,6 +25,7 @@ model ClientCompany {
   updatedAt DateTime   @updatedAt
 
   @@index([orgId])
+  @@unique([orgId, cui])   // same CUI only once per consultancy
 }
 
 // A worker at a client company. No CNP for now (sensitive data, GDPR).

@@ -1,19 +1,23 @@
 // lib/validations/company.ts
-// The rules for a client company. Used by the server action (and could reuse in the browser later).
-// Error messages in Romanian, show under each field.
+// Rules for a client company. Error messages in Romanian, shown under each field.
 
 import { z } from "zod";
+
+// Reusable rule for an optional text input:
+// trims spaces, checks max length, and turns an empty input ("") into null.
+// Export it so other schemas (employees, entries) can reuse it.
+export const optionalText = (max: number, message: string) =>
+  z.string().trim().max(max, message).transform((value) => value || null);
 
 export const companySchema = z.object({
   name: z
     .string()
     .trim()
-    .min(2, "Numele trebuie sa aiba cel putin 2 caractere")
+    .min(2, "Numele trebuie să aibă cel puțin 2 caractere")
     .max(120, "Numele este prea lung"),
-  // Optional fields: an empty input arrives as "" -> we allow it
-  cui: z.string().trim().max(20, "CUI-ul este prea lung"),
-  address: z.string().trim().max(200, "Adresa este prea lunga"),
+  cui: optionalText(20, "CUI-ul este prea lung"),
+  address: optionalText(200, "Adresa este prea lungă"),
 });
 
-// TypeScript type generated from the schema: {name: string, cui: string; address: string}
+// After validation: { name: string; cui: string | null; address: string | null }
 export type CompanyInput = z.infer<typeof companySchema>;

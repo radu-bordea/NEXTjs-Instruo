@@ -158,6 +158,13 @@
   html {
     @apply font-sans;
   }
+
+    /* Tailwind v4 shows the normal arrow on buttons. We want the hand (pointer)
+     on everything clickable, except when it's disabled. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
 }
 
 /* Notebook grid background – public pages only. Uses theme colors, works in dark mode. */

@@ -1,23 +1,34 @@
 // components/companies/CompanyForm.tsx
-// Client component: needs useActionState to show errors and a "saving..." state.
+// Reusable form for creating AND editing a client company.
+// The page decides which action runs and which values to start with.
 "use client";
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { createCompany, type CompanyFormState } from "@/actions/companies";
+import type { CompanyFormState } from "@/actions/companies";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const initialState: CompanyFormState = {};
+type Props = {
+  // Any action with the (prevState, formData) shape: createCompany or a bound updateCompany
+  action: (state: CompanyFormState, formData: FormData) => Promise<CompanyFormState>;
+  // Starting values when editing (empty when creating)
+  defaultValues?: { name: string; cui: string; address: string };
+  submitLabel?: string;
+  cancelHref: string;
+};
 
-export default function CompanyForm() {
-  // state = what the action returned last time (errors or nothing)
-  // formAction = pass to <form action>; pending = true while saving
-  const [state, formAction, pending] = useActionState(
-    createCompany,
-    initialState,
-  );
+export default function CompanyForm({
+  action,
+  defaultValues,
+  submitLabel = "Salvează",
+  cancelHref,
+}: Props) {
+  const [state, formAction, pending] = useActionState(action, {});
+
+  // After an error: what the user typed. Otherwise: the saved values (edit) or empty (new).
+  const values = state.values ?? defaultValues;
 
   return (
     <form action={formAction} className="space-y-5">
@@ -34,7 +45,7 @@ export default function CompanyForm() {
           id="name"
           name="name"
           placeholder="Brutăria Ana SRL"
-          defaultValue={state.values?.name}
+          defaultValue={values?.name}
           aria-invalid={!!state.errors?.name}
         />
         {state.errors?.name && (
@@ -48,7 +59,7 @@ export default function CompanyForm() {
           id="cui"
           name="cui"
           placeholder="RO12345678"
-          defaultValue={state.values?.cui}
+          defaultValue={values?.cui}
           aria-invalid={!!state.errors?.cui}
         />
         {state.errors?.cui && (
@@ -62,7 +73,7 @@ export default function CompanyForm() {
           id="address"
           name="address"
           placeholder="Str. Exemplu 10, Cluj-Napoca"
-          defaultValue={state.values?.address}
+          defaultValue={values?.address}
           aria-invalid={!!state.errors?.address}
         />
         {state.errors?.address && (
@@ -72,13 +83,10 @@ export default function CompanyForm() {
 
       <div className="flex gap-3">
         <Button type="submit" disabled={pending}>
-          {pending ? "Se salvează…" : "Salvează"}
+          {pending ? "Se salvează…" : submitLabel}
         </Button>
         {/* The cancel "button" is really a link, styled like an outline button */}
-        <Link
-          href="/companies"
-          className={buttonVariants({ variant: "outline" })}
-        >
+        <Link href={cancelHref} className={buttonVariants({ variant: "outline" })}>
           Anulează
         </Link>
       </div>

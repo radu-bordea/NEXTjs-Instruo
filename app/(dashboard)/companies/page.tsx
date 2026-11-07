@@ -40,26 +40,30 @@ export default async function CompaniesPage() {
           </p>
         </div>
       ) : (
-        // overflow-hidden: row backgrounds stay inside the rounded corners */
+        // overflow-hidden: row backgrounds stay inside the rounded corners
         <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card shadow-sm">
           {companies.map((company) => (
-            <li
-              key={company.id}
-              // even:bg-muted/40 → every 2nd row lightly shaded (zebra)
-              // hover:bg-accent  → light teal on the row under the mouse
-              // transition-colors → smooth color change
-              className="flex items-center justify-between gap-4 p-4 transition-colors even:bg-muted/40 hover:bg-accent"
-            >
-              <div className="min-w-0">
-                <p className="truncate font-medium">{company.name}</p>
-                <p className="truncate text-sm text-muted-foreground">
-                  {[company.cui, company.address].filter(Boolean).join(" · ") ||
-                    "Fără detalii"}
-                </p>
-              </div>
-              <span className="shrink-0 text-xs text-muted-foreground">
-                {company.createdAt.toLocaleDateString("ro-RO")}
-              </span>
+            // li: only the zebra stripe (every 2nd row lightly shaded)
+            <li key={company.id} className="even:bg-muted/40">
+              {/* The whole row is a link to the company's detail page.
+                  flex + w-full: fills the row, so you can click anywhere on it.
+                  hover:bg-accent: light teal on hover shows it's clickable. */}
+              <Link
+                href={`/companies/${company.id}`}
+                className="flex w-full items-center justify-between gap-4 p-4 transition-colors hover:bg-accent"
+              >
+                <div className="min-w-0">
+                  <p className="truncate font-medium">{company.name}</p>
+                  <p className="truncate text-sm text-muted-foreground">
+                    {[company.cui, company.address]
+                      .filter(Boolean)
+                      .join(" · ") || "Fără detalii"}
+                  </p>
+                </div>
+                <span className="shrink-0 text-xs text-muted-foreground">
+                  {company.createdAt.toLocaleDateString("ro-RO")}
+                </span>
+              </Link>
             </li>
           ))}
         </ul>

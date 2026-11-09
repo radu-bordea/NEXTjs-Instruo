@@ -2,16 +2,7 @@
 // Rules for a client company. Error messages in Romanian, shown under each field.
 
 import { z } from "zod";
-
-// Reusable rule for an optional text input:
-// trims spaces, checks max length, and turns an empty input ("") into null.
-// Export it so other schemas (employees, entries) can reuse it.
-export const optionalText = (max: number, message: string) =>
-  z
-    .string()
-    .trim()
-    .max(max, message)
-    .transform((value) => value || null);
+import { optionalText } from "./common"; // shared helper: lib/validations/common.ts
 
 export const companySchema = z.object({
   name: z
@@ -24,9 +15,7 @@ export const companySchema = z.object({
   // 3. empty → null
   cui: z
     .string()
-    .transform((value) =>
-      value.replace(/\s/g, "").toUpperCase().replace(/^RO/, ""),
-    )
+    .transform((value) => value.replace(/\s/g, "").toUpperCase().replace(/^RO/, ""))
     .refine(
       (value) => value === "" || /^\d{2,10}$/.test(value),
       "CUI-ul trebuie să conțină doar cifre (2–10)",

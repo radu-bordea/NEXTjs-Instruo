@@ -21,6 +21,7 @@
 - npx prisma generate
 - npx prisma migrate dev --name init
 - npx prisma migrate dev --name unique-cui-per-org
+- npx prisma db seed
 
 # libraries
 - npm install server-only

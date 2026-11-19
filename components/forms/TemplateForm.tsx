@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 export type TemplateFormState = {
   errors?: Record<string, string[] | undefined>;
   message?: string;
-  success?: string;                // temporary: shown while saving isn't built yet
+  success?: string; // temporary: shown while saving isn't built yet
   values?: Record<string, string>;
 };
 
@@ -25,11 +25,22 @@ type Props = {
   cancelHref: string;
 };
 
-// Native <select> styled like shadcn's Input (simple, and works with FormData)
+// Native <select> styled like shadcn's Input.
+// bg-background (solid, not transparent): Windows browsers use the select's
+// background for the dropdown list, so it must be a real color in both themes.
 const selectClass =
-  "h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm shadow-xs outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive dark:bg-input/30";
+  "h-9 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-xs outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive";
 
-export default function TemplateForm({ fields, action, defaultValues, submitLabel = "Salvează", cancelHref }: Props) {
+// Each option gets the theme colors too, so the open dropdown list is readable in dark mode
+const optionClass = "bg-background text-foreground";
+
+export default function TemplateForm({
+  fields,
+  action,
+  defaultValues,
+  submitLabel = "Salvează",
+  cancelHref,
+}: Props) {
   const [state, formAction, pending] = useActionState(action, {});
   const values = state.values ?? defaultValues;
 
@@ -48,9 +59,13 @@ export default function TemplateForm({ fields, action, defaultValues, submitLabe
       case "select":
         return (
           <select {...common} className={selectClass}>
-            <option value="">Alege…</option>
+            <option value="" className={optionClass}>
+              Alege…
+            </option>
             {field.options?.map((option) => (
-              <option key={option.value} value={option.value}>{option.label}</option>
+              <option key={option.value} value={option.value} className={optionClass}>
+                {option.label}
+              </option>
             ))}
           </select>
         );
@@ -75,7 +90,10 @@ export default function TemplateForm({ fields, action, defaultValues, submitLabe
       <div className="grid gap-5 sm:grid-cols-2">
         {fields.map((field) => (
           // Text areas take the full width; other fields share two columns
-          <div key={field.key} className={`space-y-2 ${field.type === "textarea" ? "sm:col-span-2" : ""}`}>
+          <div
+            key={field.key}
+            className={`space-y-2 ${field.type === "textarea" ? "sm:col-span-2" : ""}`}
+          >
             <Label htmlFor={field.key}>
               {field.label}
               {field.required && " *"}

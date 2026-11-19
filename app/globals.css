@@ -9,48 +9,53 @@
 /* ============ LIGHT THEME (Clean Slate, teal version) ============ */
 :root {
   --background: oklch(0.9842 0.0034 247.8575);
-  --foreground: oklch(0.2795 0.0368 260.0310);
-  --card: oklch(1.0000 0 0);
-  --card-foreground: oklch(0.2795 0.0368 260.0310);
-  --popover: oklch(1.0000 0 0);
-  --popover-foreground: oklch(0.2795 0.0368 260.0310);
-  --primary: oklch(0.5200 0.1000 185);            /* teal: buttons, links, active items */
-  --primary-foreground: oklch(1.0000 0 0);
+  --foreground: oklch(0.2795 0.0368 260.031);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2795 0.0368 260.031);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2795 0.0368 260.031);
+  --primary: oklch(0.52 0.1 185); /* teal: buttons, links, active items */
+  --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.9276 0.0058 264.5313);
   --secondary-foreground: oklch(0.3729 0.0306 259.7328);
-  --muted: oklch(0.9670 0.0029 264.5419);
-  --muted-foreground: oklch(0.5510 0.0234 264.3637);
-  --accent: oklch(0.9500 0.0250 185);             /* light teal: hover, selected rows */
-  --accent-foreground: oklch(0.3200 0.0500 190);
-  --destructive: oklch(0.6368 0.2078 25.3313);    /* red: expired, delete */
-  --destructive-foreground: oklch(1.0000 0 0);
+  --muted: oklch(0.967 0.0029 264.5419);
+  --muted-foreground: oklch(0.551 0.0234 264.3637);
+  --accent: oklch(0.95 0.025 185); /* light teal: hover, selected rows */
+  --accent-foreground: oklch(0.32 0.05 190);
+  --destructive: oklch(0.6368 0.2078 25.3313); /* red: expired, delete */
+  --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.8717 0.0093 258.3382);
   --input: oklch(0.8717 0.0093 258.3382);
-  --ring: oklch(0.5200 0.1000 185);               /* focus outline = teal */
-  --chart-1: oklch(0.5200 0.1000 185);
-  --chart-2: oklch(0.6200 0.1100 180);
-  --chart-3: oklch(0.4400 0.0800 190);
-  --chart-4: oklch(0.7200 0.0900 175);
-  --chart-5: oklch(0.3600 0.0600 195);
-  --sidebar: oklch(1.0000 0 0);
-  --sidebar-foreground: oklch(0.2795 0.0368 260.0310);
-  --sidebar-primary: oklch(0.5200 0.1000 185);
-  --sidebar-primary-foreground: oklch(1.0000 0 0);
-  --sidebar-accent: oklch(0.9500 0.0250 185);
-  --sidebar-accent-foreground: oklch(0.3200 0.0500 190);
+  --ring: oklch(0.52 0.1 185); /* focus outline = teal */
+  --chart-1: oklch(0.52 0.1 185);
+  --chart-2: oklch(0.62 0.11 180);
+  --chart-3: oklch(0.44 0.08 190);
+  --chart-4: oklch(0.72 0.09 175);
+  --chart-5: oklch(0.36 0.06 195);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.2795 0.0368 260.031);
+  --sidebar-primary: oklch(0.52 0.1 185);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.95 0.025 185);
+  --sidebar-accent-foreground: oklch(0.32 0.05 190);
   --sidebar-border: oklch(0.8717 0.0093 258.3382);
-  --sidebar-ring: oklch(0.5200 0.1000 185);
+  --sidebar-ring: oklch(0.52 0.1 185);
   --font-sans: Inter, sans-serif;
   --font-serif: Merriweather, serif;
   --font-mono: JetBrains Mono, monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0px 4px 8px -1px hsl(0 0% 0% / 0.10), 0px 1px 2px -2px hsl(0 0% 0% / 0.10);
-  --shadow: 0px 4px 8px -1px hsl(0 0% 0% / 0.10), 0px 1px 2px -2px hsl(0 0% 0% / 0.10);
-  --shadow-md: 0px 4px 8px -1px hsl(0 0% 0% / 0.10), 0px 2px 4px -2px hsl(0 0% 0% / 0.10);
-  --shadow-lg: 0px 4px 8px -1px hsl(0 0% 0% / 0.10), 0px 4px 6px -2px hsl(0 0% 0% / 0.10);
-  --shadow-xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.10), 0px 8px 10px -2px hsl(0 0% 0% / 0.10);
+  --shadow-sm:
+    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
+  --shadow:
+    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
+  --shadow-md:
+    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 2px 4px -2px hsl(0 0% 0% / 0.1);
+  --shadow-lg:
+    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 4px 6px -2px hsl(0 0% 0% / 0.1);
+  --shadow-xl:
+    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 8px 10px -2px hsl(0 0% 0% / 0.1);
   --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
 }
 
@@ -58,36 +63,36 @@
 .dark {
   --background: oklch(0.2077 0.0398 265.7549);
   --foreground: oklch(0.9288 0.0126 255.5078);
-  --card: oklch(0.2795 0.0368 260.0310);
+  --card: oklch(0.2795 0.0368 260.031);
   --card-foreground: oklch(0.9288 0.0126 255.5078);
-  --popover: oklch(0.2795 0.0368 260.0310);
+  --popover: oklch(0.2795 0.0368 260.031);
   --popover-foreground: oklch(0.9288 0.0126 255.5078);
-  --primary: oklch(0.7000 0.1100 185);            /* lighter teal, readable on dark */
+  --primary: oklch(0.7 0.11 185); /* lighter teal, readable on dark */
   --primary-foreground: oklch(0.2077 0.0398 265.7549);
-  --secondary: oklch(0.3351 0.0331 260.9120);
+  --secondary: oklch(0.3351 0.0331 260.912);
   --secondary-foreground: oklch(0.8717 0.0093 258.3382);
   --muted: oklch(0.2427 0.0381 259.9437);
   --muted-foreground: oklch(0.7137 0.0192 261.3246);
-  --accent: oklch(0.3300 0.0400 190);
-  --accent-foreground: oklch(0.9200 0.0200 185);
+  --accent: oklch(0.33 0.04 190);
+  --accent-foreground: oklch(0.92 0.02 185);
   --destructive: oklch(0.6368 0.2078 25.3313);
   --destructive-foreground: oklch(0.2077 0.0398 265.7549);
   --border: oklch(0.4461 0.0263 256.8018);
   --input: oklch(0.4461 0.0263 256.8018);
-  --ring: oklch(0.7000 0.1100 185);
-  --chart-1: oklch(0.7000 0.1100 185);
-  --chart-2: oklch(0.6200 0.1100 180);
-  --chart-3: oklch(0.7800 0.0900 175);
-  --chart-4: oklch(0.5200 0.1000 185);
-  --chart-5: oklch(0.4400 0.0800 190);
-  --sidebar: oklch(0.2795 0.0368 260.0310);
+  --ring: oklch(0.7 0.11 185);
+  --chart-1: oklch(0.7 0.11 185);
+  --chart-2: oklch(0.62 0.11 180);
+  --chart-3: oklch(0.78 0.09 175);
+  --chart-4: oklch(0.52 0.1 185);
+  --chart-5: oklch(0.44 0.08 190);
+  --sidebar: oklch(0.2795 0.0368 260.031);
   --sidebar-foreground: oklch(0.9288 0.0126 255.5078);
-  --sidebar-primary: oklch(0.7000 0.1100 185);
+  --sidebar-primary: oklch(0.7 0.11 185);
   --sidebar-primary-foreground: oklch(0.2077 0.0398 265.7549);
-  --sidebar-accent: oklch(0.3300 0.0400 190);
-  --sidebar-accent-foreground: oklch(0.9200 0.0200 185);
+  --sidebar-accent: oklch(0.33 0.04 190);
+  --sidebar-accent-foreground: oklch(0.92 0.02 185);
   --sidebar-border: oklch(0.4461 0.0263 256.8018);
-  --sidebar-ring: oklch(0.7000 0.1100 185);
+  --sidebar-ring: oklch(0.7 0.11 185);
 }
 
 /* Turns the variables into Tailwind classes: bg-primary, text-muted-foreground, etc. */
@@ -159,11 +164,20 @@
     @apply font-sans;
   }
 
-    /* Tailwind v4 shows the normal arrow on buttons. We want the hand (pointer)
+  /* Tailwind v4 shows the normal arrow on buttons. We want the hand (pointer)
      on everything clickable, except when it's disabled. */
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]) {
     cursor: pointer;
+  }
+
+  /* Tell the browser which style to use for its OWN controls:
+     select dropdown lists, date pickers, scrollbars. */
+  :root {
+    color-scheme: light;
+  }
+  .dark {
+    color-scheme: dark;
   }
 }
 
@@ -171,8 +185,16 @@
 .bg-grid {
   background-color: var(--background);
   background-image:
-    linear-gradient(to right, color-mix(in oklch, var(--border) 50%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklch, var(--border) 50%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      to right,
+      color-mix(in oklch, var(--border) 50%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklch, var(--border) 50%, transparent) 1px,
+      transparent 1px
+    );
   background-size: 32px 32px;
 }
 
@@ -183,11 +205,19 @@
 .bg-grid-fade::before {
   content: "";
   position: absolute;
-  inset: 0;                 /* cover the whole element */
-  z-index: -1;              /* sit behind the content */
+  inset: 0; /* cover the whole element */
+  z-index: -1; /* sit behind the content */
   background-image:
-    linear-gradient(to right, color-mix(in oklch, var(--border) 60%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklch, var(--border) 60%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      to right,
+      color-mix(in oklch, var(--border) 60%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklch, var(--border) 60%, transparent) 1px,
+      transparent 1px
+    );
   background-size: 32px 32px;
   /* mask: fully visible in the middle, fading to invisible at the edges */
   mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);

@@ -6,6 +6,7 @@
 - npx shadcn@latest add sheet
 - npx shadcn@latest add button input label
 - npx shadcn@latest add alert-dialog
+- npx shadcn@latest add textarea
 
 # theme
 - npm install next-themes
